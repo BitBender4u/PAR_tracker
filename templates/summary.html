@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PAR Summary Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .par-1 { background-color: #fff3cd; }
+        .par-2 { background-color: #ffeeba; }
+        .par-3 { background-color: #f5c6cb; }
+        .total { font-weight: bold; background-color: #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PAR Summary by Account Manager</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Account Manager</th>
+                    {% for category in par_categories %}
+                    <th>{{ category }}</th>
+                    {% endfor %}
+                    <th class="total">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for manager in summary %}
+                <tr>
+                    <td>{{ manager['Account Manager'] }}</td>
+                    {% for category in par_categories %}
+                    <td>{{ "%.2f"|format(manager[category]|default(0)) }}</td>
+                    {% endfor %}
+                    <td class="total">{{ "%.2f"|format(manager['Total']|default(0)) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/report">Back to Client Report</a> |
+        <a href="/">Upload New Client Data</a>
+    </div>
+</body>
+</html>
